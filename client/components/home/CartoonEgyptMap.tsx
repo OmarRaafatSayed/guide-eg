@@ -93,7 +93,7 @@ export function CartoonEgyptMap({
   }, [availableGovs, selectedGov, onSelectGov]);
 
   return (
-    <div className="relative h-96 w-full rounded-xl border overflow-hidden bg-gradient-to-br from-sky-50 to-emerald-50">
+    <div className="relative h-96 w-full rounded-xl border overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100">
       <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
         <defs>
           <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -114,23 +114,24 @@ export function CartoonEgyptMap({
             <path d="M0 3 H6" stroke="#d4a373" strokeWidth="0.4" opacity="0.3" />
           </pattern>
         </defs>
-        <rect x="0" y="0" width="100" height="100" fill="url(#bg)" />
+        <rect x="0" y="0" width="100" height="100" fill="#f4e4bc" />
         <g clipPath="url(#egypt-clip)">
-          <rect x="0" y="0" width="100" height="100" fill="url(#dunes)" opacity="0.25" />
+          <rect x="0" y="0" width="100" height="100" fill="#e6d3a3" />
+          <rect x="0" y="0" width="100" height="100" fill="url(#dunes)" opacity="0.4" />
           <rect x="0" y="0" width="100" height="100" filter="url(#paperNoise)" />
           {/* governorate regions */}
           {availableGovs.map((g, i) => {
             const poly = regions[g];
             if (!poly || poly.length < 3) return null;
             const d = `M ${poly.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(" L ")} Z`;
-            const fills = ["#fde68a", "#fef3c7", "#fef9c3", "#ffedd5", "#e9d5ff", "#d1fae5"];
+            const fills = ["#d4a373", "#e9c46a", "#f4a261", "#e76f51", "#2a9d8f", "#264653", "#e63946", "#f77f00", "#fcbf49", "#003049"];
             return (
-              <path key={g} d={d} fill={fills[i % fills.length]} opacity="0.22" stroke="#a16207" strokeOpacity="0.25" strokeDasharray="3 2" strokeWidth="0.5" />
+              <path key={g} d={d} fill={fills[i % fills.length]} opacity="0.35" stroke="#8b4513" strokeOpacity="0.6" strokeWidth="0.8" />
             );
           })}
           {/* raised base */}
           <g opacity="0.6" transform="translate(0,1.2)">
-            <path d={outlinePath(100, 100)} fill="#e4a11b" />
+            <path d={outlinePath(100, 100)} fill="#8b4513" />
           </g>
           {/* labels per region */}
           {availableGovs.map((g) => {
@@ -143,12 +144,12 @@ export function CartoonEgyptMap({
             );
           })}
           {/* country outline and water features on top */}
-          <path d={outlinePath(100, 100)} fill="none" stroke="#a16207" strokeWidth="0.7" opacity="0.9" />
-          <path d={polylinePath(NILE_PATH, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1.2" opacity="0.9" />
-          <path d={polylinePath(NILE_DELTA_LEFT, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.9" />
-          <path d={polylinePath(NILE_DELTA_RIGHT, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.9" />
-          <path d={polylinePath(SUEZ_CANAL, 100, 100)} fill="none" stroke="#38bdf8" strokeDasharray="2 2" strokeWidth="0.9" opacity="0.9" />
-          <path d={polylinePath(LAKE_NASSER, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="2" opacity="0.7" />
+          <path d={outlinePath(100, 100)} fill="none" stroke="#8b4513" strokeWidth="1.2" opacity="0.9" />
+          <path d={polylinePath(NILE_PATH, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="2" opacity="0.9" />
+          <path d={polylinePath(NILE_DELTA_LEFT, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="1.5" opacity="0.9" />
+          <path d={polylinePath(NILE_DELTA_RIGHT, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="1.5" opacity="0.9" />
+          <path d={polylinePath(SUEZ_CANAL, 100, 100)} fill="none" stroke="#3b82f6" strokeDasharray="2 2" strokeWidth="1.2" opacity="0.9" />
+          <path d={polylinePath(LAKE_NASSER, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="2.5" opacity="0.8" />
         </g>
         <g opacity="0.45">
           <text x="12" y="8" fontSize="4" fill="#0284c7">Mediterranean Sea</text>

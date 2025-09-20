@@ -10,3 +10,19 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * Marketplace API response types
+ */
+export interface ProductsResponse {
+  products: any[];
+}
+
+export interface ProductResponse {
+  product: any;
+}
+
+export interface FiltersResponse {
+  categories: string[];
+  governorates: string[];
+}

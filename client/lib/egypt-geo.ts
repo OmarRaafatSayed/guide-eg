@@ -20,11 +20,16 @@ export const EGYPT_BOUNDS = {
 
 export type GovCentroid = { gov: string; lng: number; lat: number };
 export const GOV_CENTROIDS: GovCentroid[] = [
-  { gov: "Alexandria", lng: 29.9187, lat: 31.2001 },
-  { gov: "Cairo", lng: 31.2357, lat: 30.0444 },
-  { gov: "Giza", lng: 31.21, lat: 30.0131 },
-  { gov: "Luxor", lng: 32.6396, lat: 25.6872 },
-  { gov: "Aswan", lng: 32.8998, lat: 24.0889 },
+  { gov: "Alexandria", lng: 29.9, lat: 31.2 },
+  { gov: "Cairo", lng: 31.25, lat: 30.05 },
+  { gov: "Giza", lng: 30.9, lat: 29.9 },
+  { gov: "Luxor", lng: 32.65, lat: 25.7 },
+  { gov: "Aswan", lng: 32.9, lat: 24.1 },
+  { gov: "South Sinai", lng: 33.8, lat: 28.5 },
+  { gov: "Red Sea", lng: 33.5, lat: 26.5 },
+  { gov: "New Valley", lng: 27.0, lat: 25.0 },
+  { gov: "Fayoum", lng: 30.6, lat: 29.3 },
+  { gov: "Suez", lng: 32.5, lat: 30.0 },
 ];
 
 // Approximate Nile main path from Aswan to Cairo
@@ -103,6 +108,9 @@ export const LAKE_NASSER: LngLat[] = [
 
 export type Oasis = { name: string; lng: number; lat: number };
 export const OASES: Oasis[] = [
-  { name: "Siwa Oasis", lng: 25.5, lat: 29.2 },
-  { name: "Faiyum Oasis", lng: 30.85, lat: 29.31 },
+  { name: "Siwa", lng: 25.5, lat: 29.2 },
+  { name: "Bahariya", lng: 28.3, lat: 28.3 },
+  { name: "Farafra", lng: 27.1, lat: 27.1 },
+  { name: "Dakhla", lng: 29.0, lat: 25.5 },
+  { name: "Kharga", lng: 30.5, lat: 25.4 },
 ];

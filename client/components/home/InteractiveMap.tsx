@@ -144,18 +144,19 @@ export function InteractiveMap({
               </pattern>
             </defs>
             
-            <rect x="0" y="0" width="100" height="100" fill="url(#bg)" />
+            <rect x="0" y="0" width="100" height="100" fill="#f4e4bc" />
             <g clipPath="url(#egypt-clip)">
-              <rect x="0" y="0" width="100" height="100" fill="url(#dunes)" opacity="0.25" />
+              <rect x="0" y="0" width="100" height="100" fill="#e6d3a3" />
+              <rect x="0" y="0" width="100" height="100" fill="url(#dunes)" opacity="0.4" />
               <rect x="0" y="0" width="100" height="100" filter="url(#paperNoise)" />
               
               {/* Country outline and water features */}
-              <path d={outlinePath(100, 100)} fill="none" stroke="#a16207" strokeWidth="0.7" opacity="0.9" />
-              <path d={polylinePath(NILE_PATH, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1.2" opacity="0.9" />
-              <path d={polylinePath(NILE_DELTA_LEFT, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.9" />
-              <path d={polylinePath(NILE_DELTA_RIGHT, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.9" />
-              <path d={polylinePath(SUEZ_CANAL, 100, 100)} fill="none" stroke="#38bdf8" strokeDasharray="2 2" strokeWidth="0.9" opacity="0.9" />
-              <path d={polylinePath(LAKE_NASSER, 100, 100)} fill="none" stroke="#0ea5e9" strokeWidth="2" opacity="0.7" />
+              <path d={outlinePath(100, 100)} fill="none" stroke="#8b4513" strokeWidth="1.2" opacity="0.9" />
+              <path d={polylinePath(NILE_PATH, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="2" opacity="0.9" />
+              <path d={polylinePath(NILE_DELTA_LEFT, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="1.5" opacity="0.9" />
+              <path d={polylinePath(NILE_DELTA_RIGHT, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="1.5" opacity="0.9" />
+              <path d={polylinePath(SUEZ_CANAL, 100, 100)} fill="none" stroke="#3b82f6" strokeDasharray="2 2" strokeWidth="1.2" opacity="0.9" />
+              <path d={polylinePath(LAKE_NASSER, 100, 100)} fill="none" stroke="#1e40af" strokeWidth="2.5" opacity="0.8" />
             </g>
             
             {/* Geographic labels */}
