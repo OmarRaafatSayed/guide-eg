@@ -15,7 +15,6 @@ import { useAuth } from "@/context/AuthContext";
 const nav = [
   { to: "/", label: "Home", icon: Home },
   { to: "/map", label: "Map", icon: MapPin },
-  { to: "/planner", label: "Planner", icon: Calendar },
   { to: "/feed", label: "Feed", icon: Camera },
   { to: "/marketplace", label: "Market", icon: ShoppingBag },
   { to: "/account", label: "Account", icon: Shield },

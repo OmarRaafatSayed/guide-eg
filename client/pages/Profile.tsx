@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { STORAGE_KEYS, load } from "@/lib/offline";
-import type { Post } from "./Feed";
+import type { Post } from "@/lib/social-data";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const { handle = "" } = useParams();
   const posts = load<Post[]>(STORAGE_KEYS.posts, []);
   const userPosts = useMemo(
-    () => posts.filter((p) => p.author.toLowerCase() === handle?.toLowerCase()),
+    () => posts.filter((p) => p.username.toLowerCase() === handle?.toLowerCase()),
     [posts, handle],
   );
 
@@ -79,8 +79,8 @@ function Grid({ posts }: { posts: Post[] }) {
       {posts.map((p) => (
         <div key={p.id} className="relative aspect-square overflow-hidden">
           <img
-            src={p.img}
-            alt={p.location}
+            src={p.images[0]}
+            alt={p.location?.name || 'Post'}
             className="h-full w-full object-cover"
           />
         </div>

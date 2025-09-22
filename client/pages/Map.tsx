@@ -1,35 +1,95 @@
-import { useEffect, useMemo, useState } from "react";
-import { MapBrowser } from "@/components/home/MapBrowser";
-import { MapCanvas } from "@/components/home/MapCanvas";
-import { getCities, governorates } from "@/lib/egypt-data";
-import { STORAGE_KEYS, load, save } from "@/lib/offline";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { InteractiveMap } from "@/components/home/InteractiveMap";
+import { TripQuestionnaire } from "@/components/home/TripQuestionnaire";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+
+interface SelectedItem {
+  id: string;
+  name: string;
+  type: string;
+  governorate: string;
+  city: string;
+}
+
+interface QuestionnaireAnswers {
+  days: string;
+  budget: string;
+  groupSize: string;
+  travelWith: string;
+  interests: string;
+  pace: string;
+  accommodation: string;
+  transportation: string;
+  dining: string;
+  specialRequests: string;
+}
 
 export default function MapPage() {
-  const govNames = useMemo(() => Object.keys(governorates), []);
-  const [gov, setGov] = useState<string>(govNames[0]);
-  const [city, setCity] = useState<string>(
-    load(STORAGE_KEYS.mapCity, getCities(govNames[0])[0]),
-  );
+  const navigate = useNavigate();
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
+  const [selections, setSelections] = useState<SelectedItem[]>([]);
 
-  useEffect(() => {
-    save(STORAGE_KEYS.mapCity, city);
-  }, [city]);
+  const handlePlanTrip = (selectedItems: SelectedItem[]) => {
+    setSelections(selectedItems);
+    setShowQuestionnaire(true);
+  };
+
+  const handleQuestionnaireComplete = (answers: QuestionnaireAnswers) => {
+    // Navigate to planner with selections and answers
+    navigate("/planner", {
+      state: {
+        wizard: true,
+        selections,
+        answers,
+      },
+    });
+  };
+
+  const handleBackToMap = () => {
+    setShowQuestionnaire(false);
+  };
 
   return (
-    <section className="container py-8 grid gap-6 md:grid-cols-2">
-      <div className="order-2 md:order-1">
-        <MapBrowser
-          initialGov={gov}
-          initialCity={city}
-          onSelectionChange={(g, c) => {
-            setGov(g);
-            setCity(c);
-          }}
-        />
-      </div>
-      <div className="order-1 md:order-2">
-        <MapCanvas city={city} query={`${city}, ${gov}, Egypt landmarks`} />
-      </div>
+    <section className="container py-8">
+      {!showQuestionnaire ? (
+        <div>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold tracking-tight mb-2">
+              Explore Egypt
+            </h1>
+            <p className="text-muted-foreground">
+              Click on governorate pins to discover attractions, then plan your perfect trip.
+            </p>
+          </div>
+          <InteractiveMap onPlanTrip={handlePlanTrip} />
+        </div>
+      ) : (
+        <div>
+          <div className="mb-6">
+            <Button 
+              variant="ghost" 
+              onClick={handleBackToMap}
+              className="mb-4"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Map
+            </Button>
+            <h1 className="text-3xl font-bold tracking-tight mb-2">
+              Plan Your Perfect Trip
+            </h1>
+            <p className="text-muted-foreground">
+              Answer a few questions to help us create your personalized itinerary.
+            </p>
+          </div>
+          <TripQuestionnaire 
+            selections={selections}
+            onComplete={handleQuestionnaireComplete}
+          />
+        </div>
+      )}
     </section>
   );
 }

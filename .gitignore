@@ -24,24 +24,4 @@ dist-ssr
 *.sw?
 
 .config/
-.env
-.env.local
-.env.production
-.env.development
-
-# Build outputs
-build/
-out/
-
-# Cache directories
-.cache/
-.parcel-cache/
-
-# OS generated files
-Thumbs.db
-ehthumbs.db
-
-# IDE files
-*.swp
-*.swo
-*~
+!.env

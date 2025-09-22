@@ -12,6 +12,8 @@ import MapPage from "./pages/Map";
 import FeedPage from "./pages/Feed";
 import PlannerPage from "./pages/Planner";
 import MarketplacePage from "./pages/Marketplace";
+import ProductDetailPage from "./pages/ProductDetail";
+import LocationDetailPage from "./pages/LocationDetail";
 import AccountPage from "./pages/Account";
 import ProfilePage from "./pages/Profile";
 import { Layout } from "@/components/layout/Layout";
@@ -33,6 +35,8 @@ const App = () => (
               <Route path="/planner" element={<PlannerPage />} />
               <Route path="/feed" element={<FeedPage />} />
               <Route path="/marketplace" element={<MarketplacePage />} />
+              <Route path="/marketplace/product/:id" element={<ProductDetailPage />} />
+              <Route path="/marketplace/location/:id" element={<LocationDetailPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/u/:handle" element={<ProfilePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

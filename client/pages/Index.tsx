@@ -26,10 +26,10 @@ export default function Index() {
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button asChild>
-                <a href="/planner">Plan your trip</a>
+                <a href="/map">Start Planning</a>
               </Button>
               <Button asChild variant="secondary">
-                <a href="/map">Open Map</a>
+                <a href="/map">Explore Map</a>
               </Button>
               <EmergencyButton />
             </div>

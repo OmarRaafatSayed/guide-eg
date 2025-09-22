@@ -26,23 +26,21 @@ export function MapBrowser({
   onSelectionChange?: (gov: string, city: string) => void;
 }) {
   const govNames = useMemo(() => Object.keys(governorates), []);
-  const defaultGov =
-    initialGov && govNames.includes(initialGov) ? initialGov : govNames[0];
-  const defaultCity =
-    initialCity && getCities(defaultGov).includes(initialCity)
-      ? initialCity
-      : getCities(defaultGov)[0];
+  const defaultGov = govNames.includes(initialGov || '') ? initialGov! : 'Cairo';
+  const cities = getCities(defaultGov);
+  const defaultCity = cities.includes(initialCity || '') ? initialCity! : cities[0];
   const [gov, setGov] = useState<string>(defaultGov);
   const [city, setCity] = useState<string>(defaultCity);
 
-  const cities = getCities(gov);
+  const currentCities = getCities(gov);
   const attractions = useMemo(
     () => (city ? getAttractionsByCity(city) : []),
     [city],
   );
 
   function updateGov(v: string) {
-    const firstCity = getCities(v)[0];
+    const newCities = getCities(v);
+    const firstCity = newCities[0] || v;
     setGov(v);
     setCity(firstCity);
     onSelectionChange?.(v, firstCity);
@@ -86,7 +84,7 @@ export function MapBrowser({
                   <SelectValue placeholder="Select city" />
                 </SelectTrigger>
                 <SelectContent>
-                  {cities.map((c) => (
+                  {currentCities.map((c) => (
                     <SelectItem key={c} value={c}>
                       {c}
                     </SelectItem>
@@ -106,7 +104,7 @@ export function MapBrowser({
           ))}
           {attractions.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              No attractions found for this city.
+              Select a governorate to see attractions.
             </p>
           )}
         </div>

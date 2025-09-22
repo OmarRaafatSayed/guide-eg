@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { TravelBadge } from "@/lib/social-data";
 import {
   Dialog,
   DialogContent,
@@ -14,14 +15,50 @@ export type User = {
   username: string;
   email?: string | null;
   registered: boolean;
+  fullName?: string;
+  phoneNumber?: string;
+  profilePicture?: string;
+  bio?: string;
+  travelInterests?: string[];
+  badges?: (TravelBadge & { earnedAt: string })[];
+  joinedAt?: string;
+  followersCount?: number;
+  followingCount?: number;
+  postsCount?: number;
+  notificationSettings?: {
+    likes: boolean;
+    comments: boolean;
+    followers: boolean;
+    posts: boolean;
+    badges: boolean;
+  };
+  privacySettings?: {
+    privateAccount: boolean;
+    showBadges: boolean;
+    showFollowCount: boolean;
+    allowTagging: boolean;
+  };
 };
 
-const defaultUser: User = { username: "guest", email: null, registered: false };
+
+
+const defaultUser: User = { 
+  username: "guest", 
+  email: null, 
+  registered: false,
+  badges: [],
+  travelInterests: [],
+  followersCount: 0,
+  followingCount: 0,
+  postsCount: 0
+};
 
 const AuthCtx = createContext<{
   user: User;
   signOut: () => void;
   requireEmail: (reason?: string) => Promise<boolean>;
+  updateUser: (updates: Partial<User>) => void;
+  awardBadge: (badge: TravelBadge & { earnedAt: string }) => void;
 } | null>(null);
 
 export function useAuth() {
@@ -41,6 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [step, setStep] = useState<'email' | 'details'>('email');
   const [pendingResolve, setPendingResolve] = useState<
     ((v: boolean) => void) | null
   >(null);
@@ -62,18 +102,70 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return new Promise<boolean>((resolve) => setPendingResolve(() => resolve));
   }
 
-  function submit() {
+  function submitEmail() {
     const e = email.trim();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return;
+    setStep('details');
+  }
+
+  function submitDetails() {
+    const e = email.trim();
+    const name = fullName.trim();
+    const phone = phoneNumber.trim();
+    
+    if (!name || !phone) return;
+    
     const username = e.split("@")[0];
-    setUser({ username, email: e, registered: true });
+    setUser({ 
+      username, 
+      email: e, 
+      fullName: name,
+      phoneNumber: phone,
+      registered: true,
+      joinedAt: new Date().toISOString(),
+      badges: [],
+      travelInterests: [],
+      followersCount: 0,
+      followingCount: 0,
+      postsCount: 0
+    });
     setOpen(false);
     setEmail("");
+    setFullName("");
+    setPhoneNumber("");
+    setStep('email');
     pendingResolve?.(true);
     setPendingResolve(null);
   }
 
-  const value = useMemo(() => ({ user, signOut, requireEmail }), [user]);
+  function handleCancel() {
+    setOpen(false);
+    setEmail("");
+    setFullName("");
+    setPhoneNumber("");
+    setStep('email');
+    pendingResolve?.(false);
+    setPendingResolve(null);
+  }
+
+  function updateUser(updates: Partial<User>) {
+    setUser(prev => ({ ...prev, ...updates }));
+  }
+
+  function awardBadge(badge: TravelBadge & { earnedAt: string }) {
+    setUser(prev => ({
+      ...prev,
+      badges: [...(prev.badges || []), badge]
+    }));
+  }
+
+  const value = useMemo(() => ({ 
+    user, 
+    signOut, 
+    requireEmail, 
+    updateUser, 
+    awardBadge 
+  }), [user]);
 
   return (
     <AuthCtx.Provider value={value}>
@@ -81,39 +173,60 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       <Dialog
         open={open}
         onOpenChange={(v) => {
-          setOpen(v);
-          if (!v) {
-            pendingResolve?.(false);
-            setPendingResolve(null);
-          }
+          if (!v) handleCancel();
         }}
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Sign in with email</DialogTitle>
+            <DialogTitle>
+              {step === 'email' ? 'Sign in with email' : 'Complete your profile'}
+            </DialogTitle>
             <DialogDescription>
-              {reason || "Only registered users can perform this action."}
+              {step === 'email' 
+                ? (reason || "Only registered users can perform this action.")
+                : "Please provide your name and phone number to complete registration."
+              }
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
-            <Input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            {step === 'email' ? (
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && submitEmail()}
+              />
+            ) : (
+              <>
+                <Input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+                <Input
+                  type="tel"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && submitDetails()}
+                />
+              </>
+            )}
             <div className="flex justify-end gap-2">
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setOpen(false);
-                  pendingResolve?.(false);
-                  setPendingResolve(null);
-                }}
-              >
+              <Button variant="secondary" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button onClick={submit}>Continue</Button>
+              {step === 'email' ? (
+                <Button onClick={submitEmail} disabled={!email.trim()}>
+                  Continue
+                </Button>
+              ) : (
+                <Button onClick={submitDetails} disabled={!fullName.trim() || !phoneNumber.trim()}>
+                  Complete Registration
+                </Button>
+              )}
             </div>
           </div>
         </DialogContent>

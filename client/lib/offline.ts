@@ -3,6 +3,8 @@ export const STORAGE_KEYS = {
   itinerary: "nile.itinerary",
   profile: "nile.profile",
   mapCity: "nile.mapCity",
+  welcomeSeen: "nile.welcomeSeen",
+  mapPrefs: "nile.mapPrefs",
 } as const;
 
 export function save<T>(key: string, value: T) {
