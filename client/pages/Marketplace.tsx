@@ -23,7 +23,7 @@ export default function MarketplacePage() {
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<'locations' | 'products'>('locations');
+  const [activeTab, setActiveTab] = useState<'locations' | 'products' | 'activities'>('locations');
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [governorates, setGovernorates] = useState<string[]>([]);
@@ -135,11 +135,11 @@ export default function MarketplacePage() {
         <div className="container py-12">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl font-bold tracking-tight mb-4">
-              Egyptian Artisan Marketplace
+              Handmade & Souvenirs
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              Discover authentic handcrafted treasures from local Egyptian artisans. 
-              Support traditional craftsmanship and bring home unique souvenirs.
+              Discover authentic handcrafted treasures and unique experiences from local Egyptian artisans. 
+              Support traditional craftsmanship and learn hands-on skills.
             </p>
             
             {/* Search Bar */}
@@ -241,6 +241,7 @@ export default function MarketplacePage() {
                 <TabsList>
                   <TabsTrigger value="locations">Artisan Locations</TabsTrigger>
                   <TabsTrigger value="products">All Products</TabsTrigger>
+                  <TabsTrigger value="activities">Activities</TabsTrigger>
                 </TabsList>
                 
                 <div className="text-sm text-muted-foreground">
@@ -291,6 +292,88 @@ export default function MarketplacePage() {
                     )}
                   </>
                 )}
+              </TabsContent>
+
+              <TabsContent value="activities">
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {/* Pottery Village */}
+                  <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      <img 
+                        src="/placeholder.svg" 
+                        alt="Pottery Village"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <Badge className="absolute top-4 left-4 bg-green-500">Hands-on Experience</Badge>
+                    </div>
+                    <CardHeader>
+                      <CardTitle>Pottery Village - Fustat</CardTitle>
+                      <CardDescription>
+                        Learn traditional pottery making techniques from master craftsmen in Old Cairo
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                        <span>📍 Old Cairo</span>
+                        <span>⏱️ 3-4 hours</span>
+                        <span>💰 150 EGP</span>
+                      </div>
+                      <Button className="w-full">Book Experience</Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Carpet Weaving */}
+                  <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      <img 
+                        src="/placeholder.svg" 
+                        alt="Carpet Weaving"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <Badge className="absolute top-4 left-4 bg-green-500">Hands-on Experience</Badge>
+                    </div>
+                    <CardHeader>
+                      <CardTitle>Traditional Carpet Weaving</CardTitle>
+                      <CardDescription>
+                        Master the ancient art of Egyptian carpet weaving with local artisans
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                        <span>📍 Khan El Khalili</span>
+                        <span>⏱️ 2-3 hours</span>
+                        <span>💰 200 EGP</span>
+                      </div>
+                      <Button className="w-full">Book Experience</Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Jewelry Making */}
+                  <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative overflow-hidden rounded-t-lg">
+                      <img 
+                        src="/placeholder.svg" 
+                        alt="Jewelry Making"
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <Badge className="absolute top-4 left-4 bg-green-500">Hands-on Experience</Badge>
+                    </div>
+                    <CardHeader>
+                      <CardTitle>Silver Jewelry Workshop</CardTitle>
+                      <CardDescription>
+                        Create your own Egyptian-inspired silver jewelry pieces
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                        <span>📍 Islamic Cairo</span>
+                        <span>⏱️ 4-5 hours</span>
+                        <span>💰 300 EGP</span>
+                      </div>
+                      <Button className="w-full">Book Experience</Button>
+                    </CardContent>
+                  </Card>
+                </div>
               </TabsContent>
             </Tabs>
           </div>

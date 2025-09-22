@@ -9,7 +9,8 @@ import {
   X, 
   Star,
   Clock,
-  DollarSign
+  DollarSign,
+  Leaf
 } from "lucide-react";
 import { 
   governorates, 
@@ -239,17 +240,17 @@ export function InteractiveMap({
                   </CardHeader>
                   <CardContent>
                     {!activeCategory ? (
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      <div className="grid grid-cols-2 gap-2">
                         {(Object.keys(CATEGORY_ICONS) as PopupCategory[]).map((category) => {
                           const Icon = CATEGORY_ICONS[category];
                           return (
                             <Button
                               key={category}
                               variant="outline"
-                              className="h-auto p-3 flex flex-col gap-2"
+                              className="h-auto p-2 flex flex-col gap-1 text-xs"
                               onClick={() => handleCategoryClick(category)}
                             >
-                              <Icon className="h-5 w-5" />
+                              <Icon className="h-4 w-4" />
                               <span className="text-xs">{CATEGORY_LABELS[category]}</span>
                             </Button>
                           );
@@ -306,6 +307,17 @@ export function InteractiveMap({
                                           <div className="flex items-center gap-1">
                                             <DollarSign className="h-3 w-3 text-muted-foreground" />
                                             <span className="text-xs">{attraction.priceRange}</span>
+                                          </div>
+                                        )}
+                                        {/* Eco-friendly badge for sustainable places */}
+                                        {(attraction.name.includes('Museum') || 
+                                          attraction.name.includes('National Park') ||
+                                          attraction.name.includes('Reserve') ||
+                                          attraction.type === 'coastal' ||
+                                          attraction.name.includes('Eco')) && (
+                                          <div className="flex items-center gap-1">
+                                            <Leaf className="h-3 w-3 text-green-600" />
+                                            <span className="text-xs text-green-600">Eco-Friendly</span>
                                           </div>
                                         )}
                                       </div>

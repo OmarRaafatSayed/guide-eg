@@ -9,14 +9,18 @@ import {
   Home,
   Shield,
   User,
+  ClipboardList,
+  Leaf,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const nav = [
   { to: "/", label: "Home", icon: Home },
   { to: "/map", label: "Map", icon: MapPin },
-  { to: "/feed", label: "Feed", icon: Camera },
-  { to: "/marketplace", label: "Market", icon: ShoppingBag },
+  { to: "/feed", label: "Community", icon: Camera },
+  { to: "/marketplace", label: "Handmade", icon: ShoppingBag },
+  { to: "/traditional-food", label: "Traditional Food", icon: Calendar },
+  { to: "/green-tourism", label: "Green Tourism", icon: Leaf },
   { to: "/account", label: "Account", icon: Shield },
 ];
 
@@ -53,6 +57,14 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          {/* My Plan Button - Show if user has a saved plan */}
+          <Button asChild variant="outline" size="sm" className="hidden md:flex">
+            <Link to="/planner" className="flex items-center gap-1">
+              <ClipboardList className="h-4 w-4" />
+              My Plan
+            </Link>
+          </Button>
+          
           {user.registered ? (
             <>
               <Button asChild variant="secondary" size="sm">

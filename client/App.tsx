@@ -16,6 +16,12 @@ import ProductDetailPage from "./pages/ProductDetail";
 import LocationDetailPage from "./pages/LocationDetail";
 import AccountPage from "./pages/Account";
 import ProfilePage from "./pages/Profile";
+import TraditionalFoodPage from "./pages/TraditionalFood";
+import TraditionalFoodRegionsPage from "./pages/TraditionalFoodRegions";
+import TraditionalFoodStoriesPage from "./pages/TraditionalFoodStories";
+import GreenTourismPage from "./pages/GreenTourism";
+import GreenTourismPlacesPage from "./pages/GreenTourismPlaces";
+import GreenTourismPlaceDetailPage from "./pages/GreenTourismPlaceDetail";
 import { Layout } from "@/components/layout/Layout";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -37,6 +43,15 @@ const App = () => (
               <Route path="/marketplace" element={<MarketplacePage />} />
               <Route path="/marketplace/product/:id" element={<ProductDetailPage />} />
               <Route path="/marketplace/location/:id" element={<LocationDetailPage />} />
+              <Route path="/traditional-food" element={<TraditionalFoodPage />} />
+              <Route path="/traditional-food/regions" element={<TraditionalFoodRegionsPage />} />
+              <Route path="/traditional-food/regions/:region" element={<TraditionalFoodRegionsPage />} />
+              <Route path="/traditional-food/stories" element={<TraditionalFoodStoriesPage />} />
+              <Route path="/traditional-food/stories/:id" element={<TraditionalFoodStoriesPage />} />
+              <Route path="/green-tourism" element={<GreenTourismPage />} />
+              <Route path="/green-tourism/places" element={<GreenTourismPlacesPage />} />
+              <Route path="/green-tourism/places/:category" element={<GreenTourismPlacesPage />} />
+              <Route path="/green-tourism/places/:category/:id" element={<GreenTourismPlaceDetailPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/u/:handle" element={<ProfilePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
