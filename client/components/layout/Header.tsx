@@ -21,7 +21,6 @@ const nav = [
   { to: "/marketplace", label: "Handmade", icon: ShoppingBag },
   { to: "/traditional-food", label: "Traditional Food", icon: Calendar },
   { to: "/green-tourism", label: "Green Tourism", icon: Leaf },
-  { to: "/account", label: "Account", icon: Shield },
 ];
 
 export function Header() {
