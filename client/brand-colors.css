@@ -1,0 +1,194 @@
+/* Brand Identity Colors */
+:root {
+  /* Primary Brand Colors */
+  --brand-primary: #004A58;      /* Deep Teal - Main brand color */
+  --brand-secondary: #FFC211;    /* Golden Yellow - Accent color */
+  --brand-tertiary: #2E2F2D;     /* Charcoal - Text and dark elements */
+  
+  /* Color Variations */
+  --brand-primary-light: #006B7A;
+  --brand-primary-dark: #003440;
+  --brand-secondary-light: #FFD54F;
+  --brand-secondary-dark: #FF8F00;
+  --brand-tertiary-light: #4A4B47;
+  --brand-tertiary-dark: #1A1B19;
+  
+  /* Background Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-accent: rgba(0, 74, 88, 0.05);
+  --bg-warning: rgba(255, 194, 17, 0.1);
+  
+  /* Text Colors */
+  --text-primary: #2E2F2D;
+  --text-secondary: rgba(46, 47, 45, 0.7);
+  --text-muted: rgba(46, 47, 45, 0.5);
+  --text-inverse: #FFFFFF;
+  
+  /* Border Colors */
+  --border-primary: rgba(0, 74, 88, 0.2);
+  --border-secondary: rgba(255, 194, 17, 0.3);
+  --border-light: rgba(46, 47, 45, 0.1);
+  
+  /* Shadow Colors */
+  --shadow-primary: rgba(0, 74, 88, 0.15);
+  --shadow-secondary: rgba(255, 194, 17, 0.2);
+  --shadow-dark: rgba(46, 47, 45, 0.1);
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand-secondary), var(--brand-secondary-dark));
+  color: var(--brand-tertiary);
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--brand-secondary-dark), var(--brand-secondary));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-secondary);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--brand-primary);
+  border: 2px solid var(--brand-primary);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-primary);
+}
+
+.btn-tertiary {
+  background: var(--brand-tertiary);
+  color: var(--text-inverse);
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-tertiary:hover {
+  background: var(--brand-tertiary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-dark);
+}
+
+/* Card Styles */
+.card-primary {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.card-primary:hover {
+  border-color: var(--border-primary);
+  box-shadow: 0 12px 40px var(--shadow-primary);
+  transform: translateY(-4px);
+}
+
+.card-accent {
+  background: var(--bg-accent);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+}
+
+/* Badge Styles */
+.badge-primary {
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-secondary {
+  background: var(--bg-warning);
+  color: var(--brand-secondary-dark);
+  border: 1px solid var(--border-secondary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Input Styles */
+.input-primary {
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.input-primary:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(0, 74, 88, 0.1);
+  outline: none;
+}
+
+/* Navigation Styles */
+.nav-primary {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--brand-primary);
+}
+
+/* Gradient Backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, var(--brand-secondary), var(--brand-secondary-dark));
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--brand-secondary), var(--brand-primary));
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status Colors */
+.status-success {
+  background: #10B981;
+  color: white;
+}
+
+.status-warning {
+  background: var(--brand-secondary);
+  color: var(--brand-tertiary);
+}
+
+.status-error {
+  background: #EF4444;
+  color: white;
+}
+
+.status-info {
+  background: var(--brand-primary);
+  color: white;
+}

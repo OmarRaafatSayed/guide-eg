@@ -28,6 +28,7 @@ import OrderConfirmationPage from "./pages/OrderConfirmation";
 import BookExperiencePage from "./pages/BookExperience";
 import ExperienceCheckoutPage from "./pages/ExperienceCheckout";
 import ExperienceConfirmationPage from "./pages/ExperienceConfirmation";
+import PlaceDetailPage from "./pages/PlaceDetail";
 import { Layout } from "@/components/layout/Layout";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -64,6 +65,7 @@ const App = () => (
               <Route path="/book-experience/:experienceId" element={<BookExperiencePage />} />
               <Route path="/experience-checkout" element={<ExperienceCheckoutPage />} />
               <Route path="/experience-confirmation" element={<ExperienceConfirmationPage />} />
+              <Route path="/place/:id" element={<PlaceDetailPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/u/:handle" element={<ProfilePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -12,85 +12,85 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    /* Light theme inspired by Egypt: desert sand + Egyptian blue + Nile teal */
-    --background: 48 33% 97%; /* sand */
-    --foreground: 230 60% 10%; /* deep navy */
+    /* Brand Identity Colors - #004A58, #FFC211, #2E2F2D */
+    --background: 192 100% 18%; /* #004A58 - deep teal */
+    --foreground: 0 0% 100%; /* white text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 230 60% 10%;
+    --card: 192 80% 22%; /* slightly lighter teal */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 230 60% 10%;
+    --popover: 192 80% 22%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 220 80% 42%; /* Egyptian blue */
-    --primary-foreground: 210 40% 98%;
+    --primary: 192 100% 18%; /* #004A58 - deep teal */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 36 70% 88%; /* light sand */
-    --secondary-foreground: 232 64% 12%;
+    --secondary: 48 100% 54%; /* #FFC211 - golden yellow */
+    --secondary-foreground: 120 3% 18%;
 
-    --muted: 48 30% 92%;
-    --muted-foreground: 232 15% 35%;
+    --muted: 192 50% 25%;
+    --muted-foreground: 0 0% 80%;
 
-    --accent: 174 60% 40%; /* Nile teal */
-    --accent-foreground: 210 40% 98%;
+    --accent: 48 100% 54%; /* #FFC211 - golden yellow */
+    --accent-foreground: 120 3% 18%;
 
-    --destructive: 4 80% 55%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 42 24% 86%;
-    --input: 42 24% 86%;
-    --ring: 220 80% 42%;
+    --border: 192 30% 30%;
+    --input: 192 30% 30%;
+    --ring: 192 100% 18%;
 
     --radius: 0.8rem;
 
-    --sidebar-background: 48 33% 97%;
-    --sidebar-foreground: 230 60% 10%;
-    --sidebar-primary: 220 80% 42%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 36 70% 88%;
-    --sidebar-accent-foreground: 232 64% 12%;
-    --sidebar-border: 42 24% 86%;
-    --sidebar-ring: 174 60% 40%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 120 3% 18%;
+    --sidebar-primary: 192 100% 18%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 48 100% 54%;
+    --sidebar-accent-foreground: 120 3% 18%;
+    --sidebar-border: 192 20% 90%;
+    --sidebar-ring: 48 100% 54%;
   }
 
   .dark {
-    /* Dark mode: deep midnight with teal and blue accents */
-    --background: 225 65% 6%;
-    --foreground: 210 40% 96%;
+    /* Dark mode with brand colors */
+    --background: 120 3% 10%; /* dark charcoal */
+    --foreground: 0 0% 100%;
 
-    --card: 225 65% 8%;
-    --card-foreground: 210 40% 96%;
+    --card: 120 3% 12%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 225 65% 8%;
-    --popover-foreground: 210 40% 96%;
+    --popover: 120 3% 12%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 220 80% 58%;
-    --primary-foreground: 232 64% 12%;
+    --primary: 192 100% 25%; /* lighter teal for dark mode */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 223 24% 16%;
-    --secondary-foreground: 210 40% 96%;
+    --secondary: 48 100% 60%; /* brighter yellow for dark mode */
+    --secondary-foreground: 120 3% 18%;
 
-    --muted: 224 24% 18%;
-    --muted-foreground: 215 20% 70%;
+    --muted: 120 3% 15%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 174 64% 48%;
-    --accent-foreground: 232 64% 12%;
+    --accent: 48 100% 60%;
+    --accent-foreground: 120 3% 18%;
 
-    --destructive: 4 80% 48%;
-    --destructive-foreground: 210 40% 96%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 225 24% 20%;
-    --input: 225 24% 20%;
-    --ring: 220 80% 58%;
+    --border: 120 3% 20%;
+    --input: 120 3% 20%;
+    --ring: 192 100% 25%;
 
-    --sidebar-background: 225 65% 6%;
-    --sidebar-foreground: 210 40% 96%;
-    --sidebar-primary: 220 80% 58%;
-    --sidebar-primary-foreground: 232 64% 12%;
-    --sidebar-accent: 223 24% 16%;
-    --sidebar-accent-foreground: 210 40% 96%;
-    --sidebar-border: 225 24% 20%;
-    --sidebar-ring: 174 64% 48%;
+    --sidebar-background: 120 3% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 192 100% 25%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 48 100% 60%;
+    --sidebar-accent-foreground: 120 3% 18%;
+    --sidebar-border: 120 3% 20%;
+    --sidebar-ring: 48 100% 60%;
   }
 }
 
