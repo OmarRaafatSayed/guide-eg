@@ -22,6 +22,12 @@ import TraditionalFoodStoriesPage from "./pages/TraditionalFoodStories";
 import GreenTourismPage from "./pages/GreenTourism";
 import GreenTourismPlacesPage from "./pages/GreenTourismPlaces";
 import GreenTourismPlaceDetailPage from "./pages/GreenTourismPlaceDetail";
+import CartPage from "./pages/Cart";
+import CheckoutPage from "./pages/Checkout";
+import OrderConfirmationPage from "./pages/OrderConfirmation";
+import BookExperiencePage from "./pages/BookExperience";
+import ExperienceCheckoutPage from "./pages/ExperienceCheckout";
+import ExperienceConfirmationPage from "./pages/ExperienceConfirmation";
 import { Layout } from "@/components/layout/Layout";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -52,6 +58,12 @@ const App = () => (
               <Route path="/green-tourism/places" element={<GreenTourismPlacesPage />} />
               <Route path="/green-tourism/places/:category" element={<GreenTourismPlacesPage />} />
               <Route path="/green-tourism/places/:category/:id" element={<GreenTourismPlaceDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+              <Route path="/book-experience/:experienceId" element={<BookExperiencePage />} />
+              <Route path="/experience-checkout" element={<ExperienceCheckoutPage />} />
+              <Route path="/experience-confirmation" element={<ExperienceConfirmationPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/u/:handle" element={<ProfilePage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
