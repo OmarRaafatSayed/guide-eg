@@ -33,7 +33,7 @@ const ProductCard = ({ product, onAddToCart, onToggleFavorite, isFavorite }: any
     <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
     <CardHeader>
       <CardTitle>{product.name}</CardTitle>
-      <CardDescription>{product.description}</CardDescription>
+      <p className="text-sm text-gray-600">{product.description}</p>
     </CardHeader>
     <CardContent>
       <div className="flex justify-between items-center">
@@ -49,7 +49,7 @@ const LocationCard = ({ location }: any) => (
     <img src={location.image} alt={location.name} className="w-full h-48 object-cover rounded-t-lg" />
     <CardHeader>
       <CardTitle>{location.name}</CardTitle>
-      <CardDescription>{location.description}</CardDescription>
+      <p className="text-sm text-gray-600">{location.description}</p>
     </CardHeader>
     <CardContent>
       <Badge>{location.governorate}</Badge>
