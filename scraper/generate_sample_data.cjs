@@ -1,0 +1,163 @@
+// Generate sample Egyptian handicrafts data using Node.js
+const fs = require('fs');
+
+const sampleData = [
+  {
+    name: 'Potters Village, Fustat',
+    governorate: 'Cairo',
+    city: 'Old Cairo',
+    handicraft_types: ['Pottery', 'Ceramics'],
+    description: 'Ancient pottery village where traditional Egyptian ceramics are crafted using techniques passed down through generations. Home to skilled artisans creating functional and decorative pottery.',
+    address: 'Fustat, Old Cairo, Cairo Governorate',
+    phone: '+20 2 2365 4789',
+    email: 'info@fustatpottery.com',
+    website: 'https://fustatpottery.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '9:00 AM - 6:00 PM',
+    specialties: ['Traditional pottery', 'Decorative ceramics', 'Functional kitchenware']
+  },
+  {
+    name: 'Khan el-Khalili Metalwork Bazaar',
+    governorate: 'Cairo',
+    city: 'Islamic Cairo',
+    handicraft_types: ['Metalwork', 'Jewelry', 'Copper'],
+    description: 'Historic bazaar featuring master metalworkers creating intricate copper, brass, and silver items. Traditional techniques used for centuries in this UNESCO World Heritage site.',
+    address: 'Khan el-Khalili, Islamic Cairo, Cairo',
+    phone: '+20 2 2590 3847',
+    email: 'contact@khankhalili-crafts.com',
+    website: 'https://khan-khalili.org',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '10:00 AM - 10:00 PM',
+    specialties: ['Copper work', 'Islamic metalwork', 'Traditional jewelry']
+  },
+  {
+    name: 'Siwa Oasis Traditional Weavers',
+    governorate: 'Matrouh',
+    city: 'Siwa Oasis',
+    handicraft_types: ['Textiles', 'Weaving', 'Embroidery'],
+    description: 'Berber women artisans creating traditional textiles using ancient weaving techniques. Known for colorful patterns and high-quality natural fibers.',
+    address: 'Siwa Oasis, Matrouh Governorate',
+    phone: '+20 46 460 1234',
+    email: 'siwa.weavers@gmail.com',
+    website: 'https://siwa-crafts.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '8:00 AM - 5:00 PM',
+    specialties: ['Berber textiles', 'Traditional embroidery', 'Handwoven carpets']
+  },
+  {
+    name: 'Fayoum Pottery School',
+    governorate: 'Fayoum',
+    city: 'Fayoum City',
+    handicraft_types: ['Pottery', 'Ceramics', 'Clay work'],
+    description: 'Educational center and workshop teaching traditional Fayoum pottery techniques. Produces both functional and artistic ceramic pieces.',
+    address: 'Fayoum City, Fayoum Governorate',
+    phone: '+20 84 633 5678',
+    email: 'info@fayoumpottery.edu.eg',
+    website: 'https://fayoum-pottery.edu.eg',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '9:00 AM - 4:00 PM',
+    specialties: ['Traditional pottery', 'Ceramic art', 'Pottery education']
+  },
+  {
+    name: 'Luxor Alabaster Workshops',
+    governorate: 'Luxor',
+    city: 'Luxor',
+    handicraft_types: ['Stone carving', 'Alabaster', 'Sculpture'],
+    description: 'Master craftsmen creating beautiful alabaster sculptures and decorative items. Using local alabaster stone with techniques dating back to pharaonic times.',
+    address: 'West Bank, Luxor, Luxor Governorate',
+    phone: '+20 95 237 8901',
+    email: 'luxor.alabaster@yahoo.com',
+    website: 'https://luxor-alabaster.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '8:00 AM - 6:00 PM',
+    specialties: ['Alabaster carving', 'Pharaonic replicas', 'Decorative sculptures']
+  },
+  {
+    name: 'Aswan Nubian Handicrafts Center',
+    governorate: 'Aswan',
+    city: 'Aswan',
+    handicraft_types: ['Textiles', 'Basketry', 'Jewelry'],
+    description: 'Nubian artisans preserving traditional crafts including colorful textiles, palm leaf basketry, and silver jewelry with distinctive Nubian designs.',
+    address: 'Nubian Village, Aswan, Aswan Governorate',
+    phone: '+20 97 231 4567',
+    email: 'nubian.crafts@aswan.com',
+    website: 'https://nubian-handicrafts.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '9:00 AM - 7:00 PM',
+    specialties: ['Nubian textiles', 'Palm basketry', 'Traditional jewelry']
+  },
+  {
+    name: 'Alexandria Glass Art Studio',
+    governorate: 'Alexandria',
+    city: 'Alexandria',
+    handicraft_types: ['Glassblowing', 'Glass art'],
+    description: 'Contemporary glass artists creating modern interpretations of traditional Egyptian glasswork. Offers workshops and custom pieces.',
+    address: 'Corniche, Alexandria, Alexandria Governorate',
+    phone: '+20 3 487 2345',
+    email: 'info@alex-glass.com',
+    website: 'https://alexandria-glass.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '10:00 AM - 8:00 PM',
+    specialties: ['Modern glasswork', 'Traditional techniques', 'Custom designs']
+  },
+  {
+    name: 'Dahab Bedouin Silver Workshop',
+    governorate: 'South Sinai',
+    city: 'Dahab',
+    handicraft_types: ['Jewelry', 'Silver work', 'Bedouin crafts'],
+    description: 'Bedouin silversmiths creating traditional jewelry and decorative items. Known for intricate designs and high-quality craftsmanship.',
+    address: 'Dahab, South Sinai Governorate',
+    phone: '+20 69 364 0123',
+    email: 'bedouin.silver@sinai.com',
+    website: 'https://dahab-silver.com',
+    image_url: '/api/placeholder/600/400',
+    opening_hours: '9:00 AM - 9:00 PM',
+    specialties: ['Bedouin jewelry', 'Silver craftsmanship', 'Traditional designs']
+  }
+];
+
+// Generate JSON
+fs.writeFileSync('egyptian_handicrafts.json', JSON.stringify(sampleData, null, 2));
+
+// Generate TypeScript
+const tsContent = `// Auto-generated Egyptian Handicrafts Marketplace Data
+import { ArtisanLocation } from "./marketplace-data";
+
+export const scrapedLocations: ArtisanLocation[] = [
+${sampleData.map((location, i) => `  {
+    id: "${location.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-')}",
+    name: "${location.name}",
+    governorate: "${location.governorate}",
+    description: "${location.description}",
+    history: "Traditional ${location.handicraft_types.join(', ').toLowerCase()} craftsmanship with deep cultural roots.",
+    images: ["${location.image_url}", "/api/placeholder/600/400"],
+    openingHours: "${location.opening_hours}",
+    coordinates: [31.2357, 30.0131],
+    specialties: ${JSON.stringify(location.specialties)},
+    products: []
+  }${i < sampleData.length - 1 ? ',' : ''}`).join('\n')}
+];
+
+export function getScrapedLocationById(id: string): ArtisanLocation | undefined {
+  return scrapedLocations.find(location => location.id === id);
+}
+
+export function getScrapedLocationsByGovernorate(governorate: string): ArtisanLocation[] {
+  return scrapedLocations.filter(location => location.governorate === governorate);
+}`;
+
+fs.writeFileSync('../client/lib/marketplace-data-scraped.ts', tsContent);
+
+console.log('✅ Generated Egyptian handicrafts data:');
+console.log(`📄 egyptian_handicrafts.json (${sampleData.length} locations)`);
+console.log('💻 ../client/lib/marketplace-data-scraped.ts');
+console.log('\nLocations by Governorate:');
+
+const byGov = {};
+sampleData.forEach(loc => {
+  byGov[loc.governorate] = (byGov[loc.governorate] || 0) + 1;
+});
+
+Object.entries(byGov).forEach(([gov, count]) => {
+  console.log(`  ${gov}: ${count}`);
+});
