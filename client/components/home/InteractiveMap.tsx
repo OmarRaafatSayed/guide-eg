@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Info, 
@@ -9,7 +10,12 @@ import {
   X, 
   Star,
   Clock,
-  DollarSign
+  DollarSign,
+  Leaf,
+  Award,
+  Building2,
+  Utensils,
+  ArrowRight
 } from "lucide-react";
 import { 
   governorates, 
@@ -34,7 +40,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-type PopupCategory = "overview" | "historical" | "coastal" | "hotels";
+type PopupCategory = "overview" | "about" | "museums" | "historical" | "hotels" | "activities";
 
 interface SelectedItem {
   id: string;
@@ -46,16 +52,20 @@ interface SelectedItem {
 
 const CATEGORY_ICONS = {
   overview: Info,
+  about: Info,
+  museums: Building2,
   historical: Landmark,
-  coastal: Waves,
   hotels: BedDouble,
+  activities: Utensils,
 };
 
 const CATEGORY_LABELS = {
   overview: "Overview",
-  historical: "Historical Sites", 
-  coastal: "Coastal Sights",
+  about: "About",
+  museums: "Museums",
+  historical: "Historical Sites",
   hotels: "Hotels",
+  activities: "Activities (Food, Handmade, Events)",
 };
 
 export function InteractiveMap({ 
@@ -63,6 +73,7 @@ export function InteractiveMap({
 }: { 
   onPlanTrip: (selections: SelectedItem[]) => void 
 }) {
+  const navigate = useNavigate();
   const [selectedGov, setSelectedGov] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<PopupCategory | null>(null);
   const [selections, setSelections] = useState<SelectedItem[]>([]);
@@ -202,21 +213,64 @@ export function InteractiveMap({
                 transform: "translate(-50%, -50%)" 
               }}
             >
-              <button
-                className={`group relative inline-flex items-center gap-2 rounded-full border bg-background/90 px-3 py-1.5 shadow hover:shadow-md transition ${
-                  selectedGov === center.gov ? "border-primary ring-2 ring-primary/30" : "border-foreground/10"
-                }`}
-                onClick={() => handleGovernorateClick(center.gov)}
-              >
-                <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium">{center.gov}</span>
-              </button>
+              <div className="relative">
+                {/* Main Governorate Button */}
+                <button
+                  className={`group relative inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-300 ${
+                    selectedGov === center.gov 
+                      ? "border-indigo-300 ring-4 ring-indigo-200/50 bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg" 
+                      : "border-gray-200 hover:border-indigo-300 hover:shadow-md"
+                  }`}
+                  onClick={() => handleGovernorateClick(center.gov)}
+                >
+                  <MapPin className={`h-4 w-4 ${
+                    selectedGov === center.gov ? "text-white" : "text-[#004A58]"
+                  }`} />
+                  <span className={`text-sm font-semibold ${
+                    selectedGov === center.gov ? "text-white" : "text-[#2E2F2D]"
+                  }`}>
+                    {center.gov}
+                  </span>
+                </button>
+                
+                {/* Category Icons around the governorate */}
+                {selectedGov === center.gov && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {(Object.keys(CATEGORY_ICONS) as PopupCategory[]).filter(cat => cat !== 'overview').map((category, index) => {
+                      const Icon = CATEGORY_ICONS[category];
+                      const angle = (index * 72) - 90; // 360/5 = 72 degrees apart, starting from top
+                      const radius = 60;
+                      const x = Math.cos(angle * Math.PI / 180) * radius;
+                      const y = Math.sin(angle * Math.PI / 180) * radius;
+                      
+                      return (
+                        <button
+                          key={category}
+                          className="absolute w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md hover:shadow-lg hover:scale-125 transition-all duration-300 pointer-events-auto z-10"
+                          style={{
+                            left: `calc(50% + ${x}px)`,
+                            top: `calc(50% + ${y}px)`,
+                            transform: 'translate(-50%, -50%)'
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCategoryClick(category);
+                          }}
+                          title={CATEGORY_LABELS[category]}
+                        >
+                          <Icon className="h-4 w-4 text-white" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
 
-          {/* Popup */}
+          {/* Category Popup */}
           <AnimatePresence>
-            {selectedGov && (
+            {selectedGov && activeCategory && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -226,107 +280,150 @@ export function InteractiveMap({
                 <Card className="shadow-lg">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">{selectedGov}</CardTitle>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setActiveCategory(null)}
+                        >
+                          ← Back
+                        </Button>
+                        <CardTitle className="text-lg">{activeCategory === 'about' ? selectedGov : CATEGORY_LABELS[activeCategory]}</CardTitle>
+                      </div>
                       <Button variant="ghost" size="sm" onClick={closePopup}>
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
-                    {currentGovInfo && !activeCategory && (
-                      <p className="text-sm text-muted-foreground">
-                        {currentGovInfo.description}
-                      </p>
-                    )}
                   </CardHeader>
                   <CardContent>
-                    {!activeCategory ? (
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {(Object.keys(CATEGORY_ICONS) as PopupCategory[]).map((category) => {
-                          const Icon = CATEGORY_ICONS[category];
-                          return (
-                            <Button
-                              key={category}
-                              variant="outline"
-                              className="h-auto p-3 flex flex-col gap-2"
-                              onClick={() => handleCategoryClick(category)}
-                            >
-                              <Icon className="h-5 w-5" />
-                              <span className="text-xs">{CATEGORY_LABELS[category]}</span>
-                            </Button>
-                          );
-                        })}
+                    {activeCategory === 'about' ? (
+                      <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                            <Info className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800">{selectedGov}</h3>
+                            <p className="text-sm text-blue-600">محافظة مصرية</p>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <p className="text-gray-700 leading-relaxed">
+                            {currentGovInfo?.description}
+                          </p>
+                          <div className="grid grid-cols-2 gap-4 mt-4">
+                            <div className="bg-white/60 p-3 rounded-lg">
+                              <p className="text-xs text-gray-500 mb-1">أفضل وقت للزيارة</p>
+                              <p className="text-sm font-medium text-gray-800">{currentGovInfo?.bestTimeToVisit}</p>
+                            </div>
+                            <div className="bg-white/60 p-3 rounded-lg">
+                              <p className="text-xs text-gray-500 mb-1">المناخ</p>
+                              <p className="text-sm font-medium text-gray-800">{currentGovInfo?.climate}</p>
+                            </div>
+                          </div>
+                          {currentGovInfo?.highlights && (
+                            <div className="mt-4">
+                              <p className="text-sm font-medium text-gray-700 mb-2">أبرز المعالم:</p>
+                              <div className="flex flex-wrap gap-2">
+                                {currentGovInfo.highlights.map((highlight, index) => (
+                                  <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
+                                    {highlight}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     ) : (
-                      <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setActiveCategory(null)}
-                          >
-                            ← Back
-                          </Button>
-                          <h3 className="font-medium">{CATEGORY_LABELS[activeCategory]}</h3>
-                        </div>
-                        <ScrollArea className="h-48">
-                          <div className="space-y-2">
-                            {currentAttractions.map((attraction) => {
-                              const isSelected = selections.some(s => s.id === attraction.id);
-                              return (
-                                <div
-                                  key={attraction.id}
-                                  className={`p-3 rounded-lg border cursor-pointer transition ${
-                                    isSelected 
-                                      ? "border-primary bg-primary/5" 
-                                      : "border-border hover:border-primary/50"
-                                  }`}
-                                  onClick={() => handleAttractionSelect(attraction)}
-                                >
-                                  <div className="flex items-start justify-between">
-                                    <div className="flex-1">
-                                      <h4 className="font-medium text-sm">{attraction.name}</h4>
-                                      {attraction.description && (
-                                        <p className="text-xs text-muted-foreground mt-1">
-                                          {attraction.description}
-                                        </p>
-                                      )}
-                                      <div className="flex items-center gap-3 mt-2">
-                                        {attraction.rating && (
-                                          <div className="flex items-center gap-1">
-                                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                                            <span className="text-xs">{attraction.rating}</span>
-                                          </div>
-                                        )}
-                                        {attraction.estHours && (
-                                          <div className="flex items-center gap-1">
-                                            <Clock className="h-3 w-3 text-muted-foreground" />
-                                            <span className="text-xs">{attraction.estHours}h</span>
-                                          </div>
-                                        )}
-                                        {attraction.priceRange && (
-                                          <div className="flex items-center gap-1">
-                                            <DollarSign className="h-3 w-3 text-muted-foreground" />
-                                            <span className="text-xs">{attraction.priceRange}</span>
-                                          </div>
-                                        )}
+                      <ScrollArea className="h-48">
+                        <div className="space-y-2">
+                          {currentAttractions.map((attraction) => {
+                          const isSelected = selections.some(s => s.id === attraction.id);
+                          return (
+                            <div
+                              key={attraction.id}
+                              className="p-3 rounded-lg border hover:border-primary/50 transition"
+                            >
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <h4 className="font-medium text-sm">{attraction.name}</h4>
+                                  {attraction.description && (
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                      {attraction.description}
+                                    </p>
+                                  )}
+                                  <div className="flex items-center gap-3 mt-2">
+                                    {attraction.rating && (
+                                      <div className="flex items-center gap-1">
+                                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                                        <span className="text-xs">{attraction.rating}</span>
                                       </div>
-                                    </div>
-                                    {isSelected && (
-                                      <Badge variant="default" className="ml-2">
-                                        Selected
-                                      </Badge>
+                                    )}
+                                    {attraction.estHours && (
+                                      <div className="flex items-center gap-1">
+                                        <Clock className="h-3 w-3 text-muted-foreground" />
+                                        <span className="text-xs">{attraction.estHours}h</span>
+                                      </div>
+                                    )}
+                                    {attraction.priceRange && (
+                                      <div className="flex items-center gap-1">
+                                        <DollarSign className="h-3 w-3 text-muted-foreground" />
+                                        <span className="text-xs">{attraction.priceRange}</span>
+                                      </div>
+                                    )}
+                                    {(attraction.name.includes('Museum') || 
+                                      attraction.name.includes('National Park') ||
+                                      attraction.name.includes('Reserve') ||
+                                      attraction.type === 'heritage' ||
+                                      attraction.name.includes('Eco')) && (
+                                      <div className="flex items-center gap-1">
+                                        <Leaf className="h-3 w-3 text-green-600" />
+                                        <span className="text-xs text-green-600">Eco-Friendly</span>
+                                      </div>
                                     )}
                                   </div>
+                                  <div className="flex items-center gap-2 mt-3">
+                                    <Button
+                                      size="sm"
+                                      variant={isSelected ? "secondary" : "outline"}
+                                      className={`text-xs h-7 px-3 rounded-full transition-all duration-200 ${
+                                        isSelected 
+                                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' 
+                                          : 'hover:bg-gray-50 border-gray-200'
+                                      }`}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleAttractionSelect(attraction);
+                                      }}
+                                    >
+                                      {isSelected ? '✓ Selected' : 'Select'}
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="text-xs h-7 px-3 rounded-full bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-all duration-200"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(`/place/${attraction.id}`);
+                                      }}
+                                    >
+                                      <ArrowRight className="h-3 w-3 mr-1" />
+                                      Details
+                                    </Button>
+                                  </div>
                                 </div>
-                              );
-                            })}
-                            {currentAttractions.length === 0 && (
-                              <p className="text-sm text-muted-foreground text-center py-4">
-                                No {CATEGORY_LABELS[activeCategory].toLowerCase()} found in {selectedGov}
-                              </p>
-                            )}
-                          </div>
-                        </ScrollArea>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {currentAttractions.length === 0 && (
+                          <p className="text-sm text-muted-foreground text-center py-4">
+                            No {CATEGORY_LABELS[activeCategory].toLowerCase()} found in {selectedGov}
+                          </p>
+                        )}
                       </div>
+                    </ScrollArea>
                     )}
                   </CardContent>
                 </Card>
