@@ -75,13 +75,13 @@ export default function MarketplacePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-amber-50 to-orange-50 border-b">
+      <section className="bg-[#004A58] border-b">
         <div className="container py-12">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl font-bold tracking-tight mb-4">
+            <h1 className="text-4xl font-bold tracking-tight mb-4 text-white">
               Handmade & Souvenirs
             </h1>
-            <p className="text-lg text-muted-foreground mb-6">
+            <p className="text-lg text-[#006B7A] mb-6">
               Discover authentic handcrafted treasures and unique experiences from local Egyptian artisans. 
               Support traditional craftsmanship and learn hands-on skills.
             </p>

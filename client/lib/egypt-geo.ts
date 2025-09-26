@@ -20,6 +20,7 @@ export const EGYPT_BOUNDS = {
 
 export type GovCentroid = { gov: string; lng: number; lat: number };
 export const GOV_CENTROIDS: GovCentroid[] = [
+  // المحافظات المتاحة في التطبيق فقط
   { gov: "Alexandria", lng: 29.9, lat: 31.2 },
   { gov: "Cairo", lng: 31.25, lat: 30.05 },
   { gov: "Giza", lng: 30.9, lat: 29.9 },

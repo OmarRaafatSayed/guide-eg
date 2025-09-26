@@ -162,210 +162,234 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Stories Bar */}
-      <StoriesBar
-        stories={stories}
-        onStoryClick={handleStoryClick}
-        onAddStory={handleAddStory}
-        currentUser={{
-          username: user.username,
-          avatar: user.profilePicture
-        }}
-      />
-
-      <div className="container py-6">
-        {/* Community Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold">Community Feed</h1>
-            <p className="text-muted-foreground">Connect with fellow Egypt travelers</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button onClick={() => setShowPostComposer(true)} className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Create Post
-            </Button>
-            <Button variant="outline" size="icon" onClick={() => setShowSettings(true)}>
-              <Settings className="h-4 w-4" />
-            </Button>
+    <div className="min-h-screen bg-[#004A58]">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 bg-white border-r border-gray-200">
+          <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+            <div className="flex items-center flex-shrink-0 px-4">
+              <h2 className="text-xl font-bold text-[#004A58]">NileNavigator</h2>
+            </div>
+            <div className="mt-5 flex-grow flex flex-col">
+              <nav className="flex-1 px-2 space-y-1">
+                <button className="bg-[#006B7A] text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full">
+                  <Camera className="mr-3 h-5 w-5" />
+                  Feed
+                </button>
+                <button className="text-gray-600 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full">
+                  <TrendingUp className="mr-3 h-5 w-5" />
+                  Explore
+                </button>
+                <button className="text-gray-600 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full">
+                  <Award className="mr-3 h-5 w-5" />
+                  Badges
+                </button>
+                <button className="text-gray-600 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full">
+                  <Users className="mr-3 h-5 w-5" />
+                  Community
+                </button>
+                <button className="text-gray-600 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full">
+                  <Settings className="mr-3 h-5 w-5" />
+                  Settings
+                </button>
+              </nav>
+            </div>
+            
+            {/* User Profile in Sidebar */}
+            <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+              <div className="flex items-center">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={user.profilePicture} alt={user.username} />
+                  <AvatarFallback className="bg-[#006B7A] text-white">{user.username.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-700">{user.username}</p>
+                  <p className="text-xs text-gray-500">{user.fullName}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="feed" className="flex items-center gap-2">
-              <Camera className="h-4 w-4" />
-              Feed
-            </TabsTrigger>
-            <TabsTrigger value="explore" className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
-              Explore
-            </TabsTrigger>
-            <TabsTrigger value="badges" className="flex items-center gap-2">
-              <Award className="h-4 w-4" />
-              Badges
-            </TabsTrigger>
-          </TabsList>
+        {/* Main Content */}
+        <div className="lg:pl-64 flex flex-col flex-1">
+          {/* Stories Bar */}
+          <div className="bg-white border-b border-gray-200">
+            <StoriesBar
+              stories={stories}
+              onStoryClick={handleStoryClick}
+              onAddStory={handleAddStory}
+              currentUser={{
+                username: user.username,
+                avatar: user.profilePicture
+              }}
+            />
+          </div>
 
-          <TabsContent value="feed" className="space-y-6">
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* Main Feed */}
-              <div className="lg:col-span-2 space-y-6">
-                {posts.map((post) => (
-                  <PostCard
-                    key={post.id}
-                    post={post}
-                    onLike={handleLike}
-                    onComment={handleComment}
-                    onShare={handleShare}
-                    onBookmark={handleBookmark}
-                  />
-                ))}
-                
-                {/* Load More Button */}
-                <div className="text-center">
-                  <Button 
-                    variant="outline" 
-                    onClick={loadMorePosts}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Load More Posts"}
-                  </Button>
+          <div className="flex-1 bg-gray-50">
+            <div className="max-w-4xl mx-auto py-6 px-4">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h1 className="text-2xl font-bold text-[#004A58]">Community Feed</h1>
+                  <p className="text-[#006B7A]">Connect with fellow Egypt travelers</p>
+                </div>
+                <Button onClick={() => setShowPostComposer(true)} className="bg-[#006B7A] hover:bg-[#005A66] text-white flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Create Post
+                </Button>
+              </div>
+
+              {/* Main Feed Layout */}
+              <div className="grid lg:grid-cols-4 gap-6">
+                {/* Posts Feed */}
+                <div className="lg:col-span-3 space-y-6">
+                  {posts.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      post={post}
+                      onLike={handleLike}
+                      onComment={handleComment}
+                      onShare={handleShare}
+                      onBookmark={handleBookmark}
+                    />
+                  ))}
+                  
+                  {/* Load More Button */}
+                  <div className="text-center">
+                    <Button 
+                      variant="outline" 
+                      onClick={loadMorePosts}
+                      disabled={isLoading}
+                      className="bg-white border-[#006B7A] text-[#006B7A] hover:bg-[#006B7A] hover:text-white"
+                    >
+                      {isLoading ? "Loading..." : "Load More Posts"}
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Right Sidebar */}
+                <div className="lg:col-span-1 space-y-6">
+                  {/* Quick Actions */}
+                  <Card className="bg-white border-0 shadow-lg">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg text-[#004A58]">Quick Actions</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <Button className="w-full bg-[#006B7A] hover:bg-[#005A66] text-white" onClick={() => setShowPostComposer(true)}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        New Post
+                      </Button>
+                      <Button variant="outline" className="w-full border-[#006B7A] text-[#006B7A] hover:bg-[#006B7A] hover:text-white">
+                        <Camera className="h-4 w-4 mr-2" />
+                        Add Story
+                      </Button>
+                      <Button variant="outline" className="w-full border-[#006B7A] text-[#006B7A] hover:bg-[#006B7A] hover:text-white">
+                        <Users className="h-4 w-4 mr-2" />
+                        Find Friends
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Trending Topics */}
+                  <Card className="bg-white border-0 shadow-lg">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg text-[#004A58]">Trending in Egypt</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {['#PyramidsOfGiza', '#RedSeaDiving', '#LuxorTemples', '#NileRiver', '#SinaiBedouins'].map((tag, index) => (
+                          <div key={tag} className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-[#006B7A]">{tag}</span>
+                            <span className="text-xs text-gray-500">{Math.floor(Math.random() * 100) + 50}k posts</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Recent Badges */}
+                  {user.badges && user.badges.length > 0 && (
+                    <Card className="bg-white border-0 shadow-lg">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-lg text-[#004A58]">Recent Badges</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <BadgeShowcase
+                          badges={user.badges.slice(0, 4)}
+                          title=""
+                          showDescription={false}
+                          layout="grid"
+                        />
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Suggested Users */}
+                  <Card className="bg-white border-0 shadow-lg">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg text-[#004A58]">Suggested for You</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {[
+                          { username: 'travel_photographer', followers: '12.5k', verified: true },
+                          { username: 'egypt_guide', followers: '8.2k', verified: false },
+                          { username: 'adventure_seeker', followers: '5.7k', verified: true },
+                          { username: 'nile_explorer', followers: '3.1k', verified: false }
+                        ].map((suggestedUser) => (
+                          <div key={suggestedUser.username} className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10 flex-shrink-0">
+                              <AvatarFallback className="bg-[#006B7A] text-white">{suggestedUser.username.charAt(0).toUpperCase()}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-1">
+                                <span className="text-sm font-medium truncate">{suggestedUser.username}</span>
+                                {suggestedUser.verified && <span className="text-blue-500 text-sm">✓</span>}
+                              </div>
+                              <span className="text-xs text-gray-500">{suggestedUser.followers} followers</span>
+                            </div>
+                            <Button size="sm" className="bg-[#006B7A] hover:bg-[#005A66] text-white flex-shrink-0">
+                              Follow
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Community Stats */}
+                  <Card className="bg-white border-0 shadow-lg">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg text-[#004A58]">Community Stats</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Active Members</span>
+                          <span className="font-semibold text-[#006B7A]">1,247</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Posts This Week</span>
+                          <span className="font-semibold text-[#006B7A]">89</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Badges Earned</span>
+                          <span className="font-semibold text-[#006B7A]">2,156</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Countries Visited</span>
+                          <span className="font-semibold text-[#006B7A]">47</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
 
-              {/* Sidebar */}
-              <div className="lg:col-span-1 space-y-6">
-                {/* User Profile Card */}
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={user.profilePicture} alt={user.username} />
-                        <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h3 className="font-semibold">{user.username}</h3>
-                        <p className="text-sm text-muted-foreground">{user.fullName}</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-4 text-center">
-                      <div>
-                        <div className="font-semibold">{user.postsCount || 0}</div>
-                        <div className="text-xs text-muted-foreground">Posts</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">{user.followersCount || 0}</div>
-                        <div className="text-xs text-muted-foreground">Followers</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">{user.followingCount || 0}</div>
-                        <div className="text-xs text-muted-foreground">Following</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Recent Badges */}
-                {user.badges && user.badges.length > 0 && (
-                  <BadgeShowcase
-                    badges={user.badges.slice(0, 4)}
-                    title="Recent Badges"
-                    showDescription={false}
-                    layout="grid"
-                  />
-                )}
-
-                {/* Community Stats */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Community Stats</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span>Active Members</span>
-                        <span className="font-semibold">1,247</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Posts This Week</span>
-                        <span className="font-semibold">89</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Badges Earned</span>
-                        <span className="font-semibold">2,156</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Suggested Users */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Suggested for You</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {['travel_photographer', 'egypt_guide', 'adventure_seeker'].map((username) => (
-                        <div key={username} className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-8 w-8">
-                              <AvatarFallback>{username.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm font-medium">{username}</span>
-                          </div>
-                          <Button size="sm" variant="outline">
-                            Follow
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
             </div>
-          </TabsContent>
-
-          <TabsContent value="explore" className="space-y-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.map((post) => (
-                <Card key={post.id} className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-                  <div className="aspect-square relative">
-                    <img
-                      src={post.images[0]}
-                      alt="Post"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
-                      <div className="text-white text-center">
-                        <div className="flex items-center gap-4">
-                          <span className="flex items-center gap-1">
-                            <Heart className="h-4 w-4" />
-                            {post.likes}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <MessageCircle className="h-4 w-4" />
-                            {post.comments.length}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="badges">
-            <BadgeShowcase
-              badges={user.badges || []}
-              title="Your Travel Badges"
-              showDescription={true}
-              layout="grid"
-            />
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </div>
 
       {/* Modals */}
